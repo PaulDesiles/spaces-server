@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 
+const idLength = 12;
 const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
 const charsLength = chars.length;
 
@@ -16,6 +17,7 @@ function generateRandomString(length) {
 }
 
 exports.generateId = function () {
-	return generateRandomString(12);
+	return generateRandomString(idLength);
 };
 
+exports.idLength = idLength;

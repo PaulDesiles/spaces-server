@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const idRouter = require('./routes/idRouter');
+const drawingRouter = require('./routes/drawingRouter');
 
 if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
@@ -34,5 +35,6 @@ app.use(cors({
 
 // Routes
 app.use('/generateId', idRouter);
+app.use('/drawing', drawingRouter);
 
 module.exports = app;
