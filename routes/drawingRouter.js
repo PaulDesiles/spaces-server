@@ -8,17 +8,7 @@ const drawingRouter = express.Router();
 drawingRouter.use(bodyParser.json());
 
 drawingRouter
-	.route('/:drawingId')
-	.all(async (req, res, next) => {
-		const id = req.params.drawingId;
-		if (id && id.length === idController.idLength) {
-			next();
-		} else {
-			const error = new Error('invalid argument');
-			error.status = 400;
-			next(error);
-		}
-	})
+	.route(`/:drawingId(${idController.idRegexp})`)
 	.get(async (req, res, next) => {
 		const id = req.params.drawingId;
 		const drawing = await drawingController.retrieveDrawing(id);
