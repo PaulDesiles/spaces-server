@@ -1,13 +1,14 @@
 const express = require('express');
-const crypto = require('crypto');
+const idController = require('../controllers/idController');
 
 const idRouter = express.Router();
 
 idRouter.get('/', (req, res, next) => {
-	const id = crypto.randomBytes(10).toString('hex');
 	res.statusCode = 200;
 	res.setHeader('Content-Type', 'application/json');
-	res.json({id});
+	res.json({
+		id: idController.generateId()
+	});
 });
 
 module.exports = idRouter;
