@@ -1,0 +1,2 @@
+# SPACES SERVER
+A backend for SPACES
