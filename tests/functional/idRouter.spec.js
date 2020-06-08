@@ -19,10 +19,10 @@ describe('id generator response type', () => {
 });
 
 describe('id generator response content', () => {
-	test('should return a 10 char id', async () => {
+	test('should return a 12 char id', async () => {
 		const response = await request(app).get('/generateid');
 		expect(response.body.id).toBeDefined();
-		expect(response.body.id).toHaveLength(20);
+		expect(response.body.id).toHaveLength(12);
 	});
 
 	test('should not return any other property', async () => {
