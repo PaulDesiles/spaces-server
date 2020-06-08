@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet')
 const idRouter = require('./routes/idRouter');
 
 if (process.env.NODE_ENV !== 'production') {
@@ -6,6 +7,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express();
+app.use(helmet());
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"]
+  }
+}));
 
 app.use('/generateId', idRouter);
 
