@@ -10,35 +10,64 @@ drawingRouter.use(bodyParser.json());
 drawingRouter
 	.route(`/:drawingId(${idController.idRegexp})`)
 	.get(async (req, res, next) => {
-		const id = req.params.drawingId;
-		const drawing = await drawingController.retrieveDrawing(id);
-		if (drawing) {
-			res.statusCode = 200;
-			res.setHeader('Content-Type', 'application/json');
-			res.json(drawing);
-		} else {
-			const error = new Error('Drawing not found');
-			error.status = 404;
-			next(error);
+		try {
+			const id = req.params.drawingId;
+			const drawing = await drawingController.retrieveDrawing(id);
+			if (drawing) {
+				res.statusCode = 200;
+				res.setHeader('Content-Type', 'application/json');
+				res.json(drawing);
+				return;
+			}
+		} catch (error) {
+			console.log(error);
 		}
+
+		const error = new Error('Drawing not found');
+		error.status = 404;
+		next(error);
 	})
 	.post(async (req, res, next) => {
-		const id = req.params.drawingId;
-		const body = req.body;
-		const success = await drawingController.createDrawing(
-			id,
-			body.shapes,
-			body.size
-		);
+		try {
+			const success = await drawingController.createDrawing(
+				req.params.drawingId,
+				req.body.shapes,
+				req.body.size
+			);
 
-		if (success) {
-			res.statusCode = 200;
-			res.end('ok');
-		} else {
-			const error = new Error('Failed to create drawing');
-			error.status = 500;
-			next(error);
+			if (success) {
+				res.statusCode = 201;
+				res.end('ok');
+				return;
+			}
+		} catch (error) {
+			console.log(error);
 		}
+
+		const error = new Error('Failed to create drawing');
+		error.status = 500;
+		next(error);
+	})
+	.put(async (req, res, next) => {
+		try {
+			const success = await drawingController.updateDrawing(
+				req.params.drawingId,
+				req.body.removeShapeIds,
+				req.body.addShapes
+			);
+
+			if (success) {
+				res.statusCode = 200;
+				res.end('ok');
+				return;
+			}
+		} catch (error) {
+			console.log(error);
+		}
+
+		const error = new Error('Failed to update drawing');
+		error.status = 500;
+		next(error);
 	});
 
 module.exports = drawingRouter;

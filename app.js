@@ -12,7 +12,8 @@ if (process.env.NODE_ENV !== 'production') {
 // DB
 mongoose.connect(process.env.DATABASE_URI, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	useCreateIndex: true
 }).then(
 	() => console.log('Connected to database'),
 	error => console.log(error)
