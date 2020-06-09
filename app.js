@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -8,8 +9,19 @@ if (process.env.NODE_ENV !== 'production') {
 	require('dotenv').config();
 }
 
-// Helmet
+// DB
+mongoose.connect(process.env.DATABASE_URI, {
+	useNewUrlParser: true,
+	useUnifiedTopology: true
+}).then(
+	() => console.log('Connected to database'),
+	error => console.log(error)
+);
+//
+
 const app = express();
+
+// Helmet
 app.use(helmet());
 app.use(helmet.contentSecurityPolicy({
 	directives: {
