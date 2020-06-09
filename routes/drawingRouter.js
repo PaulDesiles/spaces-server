@@ -25,12 +25,17 @@ drawingRouter
 	.post(async (req, res, next) => {
 		const id = req.params.drawingId;
 		const body = req.body;
-		const success = await drawingController.saveDrawing(id, body);
+		const success = await drawingController.createDrawing(
+			id,
+			body.shapes,
+			body.size
+		);
+
 		if (success) {
 			res.statusCode = 200;
 			res.end('ok');
 		} else {
-			const error = new Error('Failed to save drawing');
+			const error = new Error('Failed to create drawing');
 			error.status = 500;
 			next(error);
 		}
