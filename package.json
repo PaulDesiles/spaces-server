@@ -22,10 +22,15 @@
   "xo": {
     "globals": [
       "beforeAll",
+      "afterEach",
+      "afterAll",
       "describe",
       "test",
       "expect",
       "jest"
     ]
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

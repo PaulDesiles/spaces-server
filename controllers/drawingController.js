@@ -21,7 +21,7 @@ exports.createDrawing = async function (publicId, shapes, size) {
 			creationDate: now,
 			modificationDate: now,
 			schemaVersion: 1
-		}).exec();
+		});
 		return true;
 	} catch (error) {
 		console.log(error);
