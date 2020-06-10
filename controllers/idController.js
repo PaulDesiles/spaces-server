@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 const idLength = 12;
-exports.idRegexp = `[\da-z]{${idLength}}`;
+exports.idRegexp = `[0-9a-z]{${idLength}}`;
 
 const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
 const charsLength = chars.length;

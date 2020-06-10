@@ -4,32 +4,62 @@ const { setupDatabase } = require('../databaseTestHelper');
 
 setupDatabase('drawing-tests');
 
-describe('EndToEnd drawing tests', () => {
-	const id = 'tototititutu';
+const drawing = {
+	shapes: [
+		{ points: [{x: 10, y: 10}, {x: 80, y: 40}, {x: 50, y: 90}] },
+		{ points: [{x: 20, y: 20}, {x: 80, y: 40}, {x: 50, y: 90}] }
+	],
+	size: {
+		width: 1000,
+		height: 600
+	}
+};
 
-	const drawing = {
-		shapes: [
-			{ points: [{x: 10, y: 10}, {x: 80, y: 40}, {x: 50, y: 90}] },
-			{ points: [{x: 20, y: 20}, {x: 80, y: 40}, {x: 50, y: 90}] }
-		],
-		size: {
-			width: 1000,
-			height: 600
-		}
-	};
+describe('creation id', () => {
+	test('too short id', async () => {
+		const postDrawing = await request(app)
+			.post('/drawing/abc')
+			.send(drawing);
+		expect(postDrawing.statusCode).toBe(404);
+	});
+
+	test('numerical id', async () => {
+		const postDrawing = await request(app)
+			.post('/drawing/123456789012')
+			.send(drawing);
+		expect(postDrawing.statusCode).toBe(201);
+	});
+
+	test('alphanumerical id', async () => {
+		const postDrawing = await request(app)
+			.post('/drawing/abc456789abc')
+			.send(drawing);
+		expect(postDrawing.statusCode).toBe(201);
+	});
+
+	test('invalid char id', async () => {
+		const postDrawing = await request(app)
+			.post('/drawing/abc456789abé')
+			.send(drawing);
+		expect(postDrawing.statusCode).toBe(404);
+	});
 
 	test('cannot use same id twice', async () => {
 		const postDrawing = await request(app)
-			.post(`/drawing/${id}`)
+			.post('/drawing/abc456789abc')
 			.send(drawing);
 
 		expect(postDrawing.statusCode).toBe(201);
 
 		const postDrawing2 = await request(app)
-			.post(`/drawing/${id}`)
+			.post('/drawing/abc456789abc')
 			.send(drawing);
 		expect(postDrawing2.statusCode).toBe(500);
 	});
+});
+
+describe('EndToEnd drawing tests', () => {
+	const id = '123456789abc';
 
 	test('create and retrieve', async () => {
 		const postDrawing = await request(app)
