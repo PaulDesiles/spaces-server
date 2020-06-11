@@ -13,11 +13,12 @@ const drawingSchema = new mongoose.Schema({
 			y: Number
 		}]
 	}],
-	size: {
+	parameters: {
 		type: {
 			_id: false,
 			width: Number,
-			height: Number
+			height: Number,
+			gap: Number
 		},
 		required: true
 	},

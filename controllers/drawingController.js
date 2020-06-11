@@ -11,13 +11,13 @@ exports.retrieveDrawing = async function (publicId) {
 	return null;
 };
 
-exports.createDrawing = async function (publicId, shapes, size) {
+exports.createDrawing = async function (publicId, shapes, parameters) {
 	try {
 		const now = new Date();
 		await Drawings.create({
 			publicId,
 			shapes,
-			size,
+			parameters,
 			creationDate: now,
 			modificationDate: now,
 			schemaVersion: 1

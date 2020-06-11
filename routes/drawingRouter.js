@@ -32,7 +32,7 @@ drawingRouter
 			const success = await drawingController.createDrawing(
 				req.params.drawingId,
 				req.body.shapes,
-				req.body.size
+				req.body.parameters
 			);
 
 			if (success) {

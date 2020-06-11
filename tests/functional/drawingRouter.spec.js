@@ -9,9 +9,10 @@ const drawing = {
 		{ points: [{x: 10, y: 10}, {x: 80, y: 40}, {x: 50, y: 90}] },
 		{ points: [{x: 20, y: 20}, {x: 80, y: 40}, {x: 50, y: 90}] }
 	],
-	size: {
+	parameters: {
 		width: 1000,
-		height: 600
+		height: 600,
+		gap: 10
 	}
 };
 
@@ -71,7 +72,7 @@ describe('EndToEnd drawing tests', () => {
 		expect(getDrawing.statusCode).toBe(200);
 		expect(getDrawing.body.publicId).toBe(id);
 		expect(getDrawing.body.shapes).toMatchObject(drawing.shapes);
-		expect(getDrawing.body.size).toEqual(drawing.size);
+		expect(getDrawing.body.parameters).toEqual(drawing.parameters);
 	});
 
 	test('create, update and retrieve', async () => {
