@@ -19,20 +19,11 @@ app.use(helmet.contentSecurityPolicy({
 }));
 
 // Cors
-let allowedOrigins = [];
-if (process.env.CORSALLOWED) {
-	allowedOrigins = process.env.CORSALLOWED.split(',');
+if (process.env.CORS_ALLOWED_ORIGIN) {
+	app.use(cors({
+		origin: process.env.CORS_ALLOWED_ORIGIN
+	}));
 }
-
-app.use(cors({
-	origin(origin, callback) {
-		if (!origin || allowedOrigins.includes(origin)) {
-			callback(null, true);
-		} else {
-			callback(new Error(`${origin} not allowed by CORS`));
-		}
-	}
-}));
 
 // Routes
 app.use('/generateId', idRouter);
