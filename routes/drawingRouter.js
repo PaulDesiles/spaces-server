@@ -50,15 +50,15 @@ drawingRouter
 	})
 	.put(async (req, res, next) => {
 		try {
-			const success = await drawingController.updateDrawing(
+			const shapeIds = await drawingController.updateDrawing(
 				req.params.drawingId,
 				req.body.removeShapeIds,
 				req.body.addShapes
 			);
 
-			if (success) {
+			if (shapeIds) {
 				res.statusCode = 200;
-				res.end('ok');
+				res.json({shapeIds});
 				return;
 			}
 		} catch (error) {

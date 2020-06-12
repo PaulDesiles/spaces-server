@@ -50,13 +50,13 @@ exports.updateDrawing = async function (publicId, removeShapeIds, addShapes) {
 
 			await drawing.save();
 
-			return true;
-		} else {
-			console.log(`failed to find drawing : ${publicId}`);
+			return drawing.shapes.map(s => s._id.toString());
 		}
+		
+		console.log(`failed to find drawing : ${publicId}`);
 	} catch (error) {
 		console.log(error);
 	}
 
-	return false;
+	return undefined;
 };
